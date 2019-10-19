@@ -1,6 +1,6 @@
 <template lang="pug">
   #app.container
-    LoadButton(@file-select="recvFilePath")
+    LoadButton(@file-select="recvFileContent")
 </template>
 
 <script>
@@ -13,12 +13,12 @@ export default {
   },
   data() {
     return {
-      file: ""
+      fileContent: ""
     };
   },
   methods: {
-    recvFilePath(e) {
-      this.file = e;
+    recvFileContent(e) {
+      this.fileContent = e;
     }
   }
 }
