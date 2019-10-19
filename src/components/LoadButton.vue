@@ -42,7 +42,9 @@ export default {
         reader.addEventListener("load", (e) =>{
           this.errorMsg = "";
           this.msg = "読み込み完了";
-          return resolve(e.target.result);
+          return resolve(
+            e.target.result.replace("window.YTD.tweet.part0 = ", "")
+          );
         }, false);
         this.msg = "読み込み中";
         reader.readAsText(files[0]);

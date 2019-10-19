@@ -13,12 +13,17 @@ export default {
   },
   data() {
     return {
-      fileContent: ""
+      fileContent: "",
+      tweets: [],
     };
   },
   methods: {
     recvFileContent(e) {
       this.fileContent = e;
+      this.parseTweets();
+    },
+    parseTweets() {
+      this.tweets = JSON.parse(this.fileContent);
     }
   }
 }
