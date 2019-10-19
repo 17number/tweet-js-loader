@@ -1,16 +1,25 @@
 <template lang="pug">
   #app.container
-    img(alt="Vue logo" src="./assets/logo.png")
-    HelloWorld(msg="Welcome to Your Vue.js App")
+    LoadButton(@file-select="recvFilePath")
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import LoadButton from './components/LoadButton.vue'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    LoadButton,
+  },
+  data() {
+    return {
+      file: ""
+    };
+  },
+  methods: {
+    recvFilePath(e) {
+      this.file = e;
+    }
   }
 }
 </script>
