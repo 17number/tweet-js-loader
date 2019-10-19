@@ -5,6 +5,8 @@
         label.file-label
           input.file-input(type="file" name="tweetjs" @change="onFileChange")
           span.file-cta
+            span.file-icon
+              font-awesome-icon(:icon="['fas', 'file-upload']")
             span.file-label
               |tweet.js を読み込む
     .has-text-danger.columns.is-centered {{ errorMsg }}
