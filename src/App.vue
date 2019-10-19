@@ -1,5 +1,5 @@
 <template lang="pug">
-  #app
+  #app.container
     img(alt="Vue logo" src="./assets/logo.png")
     HelloWorld(msg="Welcome to Your Vue.js App")
 </template>
@@ -16,6 +16,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import 'https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css';
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
