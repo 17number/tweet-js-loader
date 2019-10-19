@@ -1,31 +1,11 @@
 <template lang="pug">
-  #app.container
-    LoadButton(@file-select="recvFileContent")
+  #app
+    router-view
 </template>
 
 <script>
-import LoadButton from './components/LoadButton.vue'
-
 export default {
   name: 'app',
-  components: {
-    LoadButton,
-  },
-  data() {
-    return {
-      fileContent: "",
-      tweets: [],
-    };
-  },
-  methods: {
-    recvFileContent(e) {
-      this.fileContent = e;
-      this.parseTweets();
-    },
-    parseTweets() {
-      this.tweets = JSON.parse(this.fileContent);
-    }
-  }
 }
 </script>
 
@@ -37,6 +17,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
