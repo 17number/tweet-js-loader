@@ -9,6 +9,7 @@
         .column.is-12-mobile.is-6-tablet.is-4-widescreen.is-3-fullhd(v-for="(tweet, index) in tweetsForReder")
           Tweet(:tweet="tweet")
     Nav(:prevPage="prevPage" :currentPage="currentPage" :nextPage="nextPage" :maxPage="maxPage" v-if="tweetsForReder.length > 0")
+    Footer(:version="version")
 </template>
 
 <script>
@@ -17,6 +18,7 @@ import Tweet from '@/components/Tweet.vue';
 import Description from '@/components/Description.vue';
 import Hero from '@/components/Hero.vue';
 import Nav from '@/components/Nav.vue';
+import Footer from '@/components/Footer.vue';
 
 export default {
   name: 'Home',
@@ -26,6 +28,7 @@ export default {
     Description,
     Hero,
     Nav,
+    Footer,
   },
   data() {
     return {
@@ -37,6 +40,7 @@ export default {
       nextPage: 2,
       maxPage: 1,
       countPerPage: 60,
+      version: "v1.0.1"
     };
   },
   methods: {
