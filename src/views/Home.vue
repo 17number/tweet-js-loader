@@ -3,12 +3,12 @@
     Hero
     Description
     LoadButton(@file-select="recvFileContent" v-if="!fileContent")
-    Nav(:prevPage="prevPage" :currentPage="currentPage" :nextPage="nextPage" :maxPage="maxPage" v-if="tweetsForReder.length > 0")
+    Nav(:pages="pages" v-if="tweets.forRender.length > 0")
     .container
       .tweets.columns.is-mobile.is-multiline
-        .column.is-12-mobile.is-6-tablet.is-4-widescreen.is-3-fullhd(v-for="(tweet, index) in tweetsForReder")
+        .column.is-12-mobile.is-6-tablet.is-4-widescreen.is-3-fullhd(v-for="(tweet, index) in tweets.forRender")
           Tweet(:tweet="tweet")
-    Nav(:prevPage="prevPage" :currentPage="currentPage" :nextPage="nextPage" :maxPage="maxPage" v-if="tweetsForReder.length > 0")
+    Nav(:pages="pages" v-if="tweets.forRender.length > 0")
     Footer(:version="version")
 </template>
 
@@ -33,13 +33,17 @@ export default {
   data() {
     return {
       fileContent: "",
-      tweets: [],
-      tweetsForReder: [],
-      prevPage: 1,
-      currentPage: 1,
-      nextPage: 2,
-      maxPage: 1,
-      countPerPage: 60,
+      tweets: {
+        all: [],
+        forRender: [],
+      },
+      pages: {
+        prev: 1,
+        current: 1,
+        next: 2,
+        max: 1,
+        per: 60,
+      },
       version: "v1.0.1"
     };
   },
@@ -47,11 +51,11 @@ export default {
     recvFileContent(e) {
       this.fileContent = e;
       this.parseTweets();
-      this.maxPage = Math.ceil(this.tweets.length / this.countPerPage);
-      this.sliceTweets(this.currentPage);
+      this.pages.max = Math.ceil(this.tweets.all.length / this.pages.per);
+      this.sliceTweets(this.pages.current);
     },
     async parseTweets() {
-      this.tweets = JSON.parse(this.fileContent);
+      this.tweets.all = JSON.parse(this.fileContent);
     },
     loadTwitterWidgetScript() {
       let twitterWidgetScript = document.createElement("script");
@@ -68,21 +72,21 @@ export default {
       }
     },
     sliceTweets(page = 1) {
-      this.tweetsForReder = this.tweets.slice(
-        (page - 1) * this.countPerPage,
-        page * this.countPerPage
+      this.tweets.forRender = this.tweets.all.slice(
+        (page - 1) * this.pages.per,
+        page * this.pages.per
       );
     },
     setPageNumber() {
       const currentPage = parseInt(this.$route.query.page || 1);
-      this.prevPage = Math.max(1, currentPage - 1);
-      this.currentPage = currentPage;
-      this.nextPage = currentPage + 1;
+      this.pages.prev = Math.max(1, currentPage - 1);
+      this.pages.current = currentPage;
+      this.pages.next = currentPage + 1;
     },
     updatePageNumber(nextPage) {
-      this.prevPage = Math.max(1, nextPage - 1);
-      this.currentPage = nextPage;
-      this.nextPage = Math.min(nextPage + 1, this.maxPage);
+      this.pages.prev = Math.max(1, nextPage - 1);
+      this.pages.current = nextPage;
+      this.pages.next = Math.min(nextPage + 1, this.pages.max);
     },
   },
   created() {
@@ -93,7 +97,7 @@ export default {
   },
   beforeRouteUpdate(to, from, next) {
     document.querySelectorAll("twitter-widget").forEach(e => e.remove());
-    this.tweetsForReder = [];
+    this.tweets.forRender = [];
     this.updatePageNumber(parseInt(to.query.page));
     this.sliceTweets(to.query.page);
     this.removeTwitterWidgetScript();

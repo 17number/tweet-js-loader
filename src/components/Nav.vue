@@ -5,27 +5,24 @@
         router-link.pagination-link(:to="`/?page=1`")
           |Top(1)
       li
-        router-link.pagination-link(:to="`/?page=${prevPage}`")
-          |{{ prevPage }}page
+        router-link.pagination-link(:to="`/?page=${pages.prev}`")
+          |{{ pages.prev }}page
       li
         .pagination-link.is-current
-          |{{ currentPage }}page
+          |{{ pages.current }}page
       li
-        router-link.pagination-link(:to="`/?page=${nextPage}`")
-          |{{ nextPage }}page
+        router-link.pagination-link(:to="`/?page=${pages.next}`")
+          |{{ pages.next }}page
       li
-        router-link.pagination-link(:to="`/?page=${maxPage}`")
-          |Last({{ maxPage }})
+        router-link.pagination-link(:to="`/?page=${pages.max}`")
+          |Last({{ pages.max }})
 </template>
 
 <script>
 export default {
   name: 'Nav',
   props: [
-    'prevPage',
-    'currentPage',
-    'nextPage',
-    'maxPage',
+    'pages',
   ],
 }
 </script>
