@@ -47,7 +47,7 @@ export default {
         max: 1,
         per: 60,
       },
-      version: "v1.0.2"
+      version: "v1.0.3"
     };
   },
   methods: {
