@@ -4,6 +4,25 @@
 
 以前は「全ツイート履歴」をダウンロードできたが、[Twitter の UI 変更とともに廃止された模様](https://twitter.com/sugtao4423/status/1185464513945980928)。
 
+## Version History
+
+### 1.0.2
+
+CSV ダウンロード機能の追加
+
+- `tweet_id`
+- `timestamp`
+- `full_text`
+
+### 1.0.1
+
+フッター追加
+
+### 1.0.0
+
+リリース
+
+
 ## スクリーンショット
 
 ![screenshot](images/screenshot1.png)

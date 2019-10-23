@@ -3,6 +3,7 @@
     Hero
     Description
     LoadButton(@file-select="recvFileContent" v-if="!fileContent")
+    DownloadButton(:tweets="tweets.all" v-if="tweets.all.length > 0")
     Nav(:pages="pages" v-if="tweets.forRender.length > 0")
     .container
       .tweets.columns.is-mobile.is-multiline
@@ -14,6 +15,7 @@
 
 <script>
 import LoadButton from '@/components/LoadButton.vue';
+import DownloadButton from '@/components/DownloadButton.vue';
 import Tweet from '@/components/Tweet.vue';
 import Description from '@/components/Description.vue';
 import Hero from '@/components/Hero.vue';
@@ -24,6 +26,7 @@ export default {
   name: 'Home',
   components: {
     LoadButton,
+    DownloadButton,
     Tweet,
     Description,
     Hero,
@@ -44,7 +47,7 @@ export default {
         max: 1,
         per: 60,
       },
-      version: "v1.0.1"
+      version: "v1.0.2"
     };
   },
   methods: {
