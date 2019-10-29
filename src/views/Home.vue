@@ -80,9 +80,15 @@ export default {
       this.pages.next = currentPage + 1;
     },
     updatePageNumber(nextPage) {
-      this.pages.prev = Math.max(1, nextPage - 1);
-      this.pages.current = nextPage;
-      this.pages.next = Math.min(nextPage + 1, this.pages.max);
+      if (isNaN(nextPage)) {
+        this.pages.prev = 1;
+        this.pages.current = 1;
+        this.pages.next = Math.min(2, this.pages.max);
+      } else {
+        this.pages.prev = Math.max(1, nextPage - 1);
+        this.pages.current = nextPage;
+        this.pages.next = Math.min(nextPage + 1, this.pages.max);
+      }
     },
   },
   created() {

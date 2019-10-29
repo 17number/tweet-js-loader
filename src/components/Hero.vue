@@ -1,10 +1,11 @@
 <template lang="pug">
   .hero
-    section.hero.is-primary.is-bold
-      .hero-body
-        .container
-          h1.title.is-size-4
-            |tweet.js loader
+    router-link(:to="`/`")
+      section.hero.is-primary.is-bold
+        .hero-body
+          .container
+            h1.title.is-size-4
+              |tweet.js loader
 </template>
 
 <script>
