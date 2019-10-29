@@ -6,6 +6,10 @@
 
 ## Version History
 
+### 1.0.5
+
+- キーワード検索機能
+
 ### 1.0.4
 
 - [Google Analytics](https://marketingplatform.google.com/intl/ja/about/analytics/) 追加

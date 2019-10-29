@@ -3,6 +3,14 @@
     Description
     LoadButton(@file-select="recvFileContent" v-if="!fileContent")
     DownloadButton(:tweets="tweets.all" v-if="tweets.all.length > 0")
+    .search-form.container(v-if="tweets.all.length > 0")
+      .columns.is-mobile
+        .column.is-12-mobile.is-offset-1-tablet.is-10-tablet.is-offset-2-desktop.is-8-desktop
+          .field
+            p.control.has-icons-left(:class="filteringTimer > 0 ? 'is-loading' : ''")
+              input.input(type="text" @input="filtering" v-model="keywords" placeholder="キーワードを入力")
+              span.icon.is-small.is-left
+                font-awesome-icon(:icon="['fas', 'search']")
     Nav(:pages="pages" v-if="tweets.forRender.length > 0")
     .container
       .tweets.columns.is-mobile.is-multiline
@@ -32,6 +40,7 @@ export default {
       fileContent: "",
       tweets: {
         all: [],
+        filtered: [],
         forRender: [],
       },
       pages: {
@@ -41,17 +50,20 @@ export default {
         max: 1,
         per: 60,
       },
+      keywords: "",
+      filteringTimer: 0,
     };
   },
   methods: {
     recvFileContent(e) {
       this.fileContent = e;
       this.parseTweets();
-      this.pages.max = Math.ceil(this.tweets.all.length / this.pages.per);
+      this.pages.max = Math.ceil(this.tweets.filtered.length / this.pages.per);
       this.sliceTweets(this.pages.current);
     },
     async parseTweets() {
       this.tweets.all = JSON.parse(this.fileContent);
+      this.tweets.filtered = this.tweets.all;
     },
     loadTwitterWidgetScript() {
       let twitterWidgetScript = document.createElement("script");
@@ -68,7 +80,7 @@ export default {
       }
     },
     sliceTweets(page = 1) {
-      this.tweets.forRender = this.tweets.all.slice(
+      this.tweets.forRender = this.tweets.filtered.slice(
         (page - 1) * this.pages.per,
         page * this.pages.per
       );
@@ -89,6 +101,36 @@ export default {
         this.pages.current = nextPage;
         this.pages.next = Math.min(nextPage + 1, this.pages.max);
       }
+    },
+    filtering() {
+      if (this.filteringTimer !== 0) {
+        clearTimeout(this.filteringTimer);
+        this.filteringTimer = 0;
+      }
+      if (this.keywords.trim() === "") {
+        document.querySelectorAll("twitter-widget").forEach(e => e.remove());
+        this.removeTwitterWidgetScript();
+        this.tweets.filtered = this.tweets.all;
+        this.updateAfterFilter();
+        return;
+      }
+      this.filteringTimer = setTimeout(() => {
+        document.querySelectorAll("twitter-widget").forEach(e => e.remove());
+        this.removeTwitterWidgetScript();
+        this.tweets.filtered = this.tweets.all.filter(tweet => {
+          return this.keywords.trim().split(/[\s\t]/).every(keyword => {
+            return tweet.full_text.indexOf(keyword) >= 0;
+          })
+        });
+        this.updateAfterFilter();
+      }, 1000);
+    },
+    updateAfterFilter() {
+      this.sliceTweets();
+      this.pages.max = Math.ceil(this.tweets.filtered.length / this.pages.per);
+      this.updatePageNumber();
+      history.pushState(null, null, "/tweet-js-loader/");
+      this.filteringTimer = 0;
     },
   },
   created() {
