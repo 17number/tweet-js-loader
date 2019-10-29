@@ -6,25 +6,29 @@
 
 ## Version History
 
+### 1.0.4
+
+- [Google Analytics](https://marketingplatform.google.com/intl/ja/about/analytics/) 追加
+- [プライバシーポリシー](https://17number.github.io/tweet-js-loader/privacy)追加
+
 ### 1.0.3
 
-OGP 設定
+- OGP 設定
 
 ### 1.0.2
 
-CSV ダウンロード機能の追加
-
-- `tweet_id`
-- `timestamp`
-- `full_text`
+- CSV ダウンロード機能の追加
+  - `tweet_id`
+  - `timestamp`
+  - `full_text`
 
 ### 1.0.1
 
-フッター追加
+- フッター追加
 
 ### 1.0.0
 
-リリース
+- リリース
 
 
 ## スクリーンショット
