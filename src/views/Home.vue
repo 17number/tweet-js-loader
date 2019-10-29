@@ -1,6 +1,5 @@
 <template lang="pug">
   #home
-    Hero
     Description
     LoadButton(@file-select="recvFileContent" v-if="!fileContent")
     DownloadButton(:tweets="tweets.all" v-if="tweets.all.length > 0")
@@ -10,7 +9,6 @@
         .column.is-12-mobile.is-6-tablet.is-4-widescreen.is-3-fullhd(v-for="(tweet, index) in tweets.forRender")
           Tweet(:tweet="tweet")
     Nav(:pages="pages" v-if="tweets.forRender.length > 0")
-    Footer(:version="version")
 </template>
 
 <script>
@@ -18,9 +16,7 @@ import LoadButton from '@/components/LoadButton.vue';
 import DownloadButton from '@/components/DownloadButton.vue';
 import Tweet from '@/components/Tweet.vue';
 import Description from '@/components/Description.vue';
-import Hero from '@/components/Hero.vue';
 import Nav from '@/components/Nav.vue';
-import Footer from '@/components/Footer.vue';
 
 export default {
   name: 'Home',
@@ -29,9 +25,7 @@ export default {
     DownloadButton,
     Tweet,
     Description,
-    Hero,
     Nav,
-    Footer,
   },
   data() {
     return {
@@ -47,7 +41,6 @@ export default {
         max: 1,
         per: 60,
       },
-      version: "v1.0.3"
     };
   },
   methods: {

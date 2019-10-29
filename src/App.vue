@@ -1,11 +1,25 @@
 <template lang="pug">
   #app
+    Hero
     router-view
+    Footer(:version="version")
 </template>
 
 <script>
+import Hero from '@/components/Hero.vue';
+import Footer from '@/components/Footer.vue';
+
 export default {
   name: 'app',
+  components: {
+    Hero,
+    Footer,
+  },
+  data() {
+    return {
+      version: "v1.0.4"
+    };
+  },
 }
 </script>
 
