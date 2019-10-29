@@ -10,7 +10,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import 'https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css';
+@import 'https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css';
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
