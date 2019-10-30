@@ -32,10 +32,12 @@ export default {
         return CSV.stringify([
           tweet.id_str,
           moment(tweet.created_at).tz("Asia/Tokyo").format("Y/MM/DD HH:mm:ss"),
-          tweet.full_text
+          tweet.full_text,
+          tweet.favorite_count,
+          tweet.retweet_count,
         ]);
       });
-      contents = [["tweet_id", "timestamp", "text"]].concat(contents);
+      contents = [["tweet_id", "timestamp", "text", "likes", "retweets"]].concat(contents);
       const blob = new Blob([bom, contents.join("\n")], {type: "text/csv"});
       this.contentURL = window.URL.createObjectURL(blob);
     }

@@ -63,6 +63,10 @@ export default {
     },
     async parseTweets() {
       this.tweets.all = JSON.parse(this.fileContent);
+      this.tweets.all.forEach(tweet => {
+        tweet.favorite_count = Number(tweet.favorite_count);
+        tweet.retweet_count = Number(tweet.retweet_count);
+      });
       this.tweets.filtered = this.tweets.all;
     },
     loadTwitterWidgetScript() {
