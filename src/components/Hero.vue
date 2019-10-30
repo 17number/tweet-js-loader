@@ -6,11 +6,16 @@
           .container
             h1.title.is-size-4
               |tweet.js loader
+            h2.subtitle.is-size-5
+              |{{ version }}
 </template>
 
 <script>
 export default {
   name: 'Hero',
+  props: [
+    'version',
+  ],
 }
 </script>
 

@@ -1,8 +1,8 @@
 <template lang="pug">
   #app
-    Hero
+    Hero(:version="version")
     router-view
-    Footer(:version="version")
+    Footer
 </template>
 
 <script>

@@ -2,19 +2,17 @@
   footer.footer
     .container
       .columns.is-mobile.is-multiline
-        .column.is-12-mobile.is-3-tablet
-          | {{ version }}
-        .column.is-12-mobile.is-3-tablet
+        .column.is-12-mobile.is-4-tablet
           a(href="https://github.com/17number/tweet-js-loader" target="_blank" rel="noopener noreferrer")
             span.icon
               font-awesome-icon(:icon="['fab', 'github']")
             | Source code
-        .column.is-12-mobile.is-3-tablet
+        .column.is-12-mobile.is-4-tablet
           a(:href="`https://twitter.com/intent/tweet?text=${shareText()}`" target="_blank" rel="noopener noreferrer")
             span.icon
               font-awesome-icon(:icon="['fab', 'twitter']")
             | Share
-        .column.is-12-mobile.is-3-tablet
+        .column.is-12-mobile.is-4-tablet
           router-link(:to="`/privacy`")
             span.icon
               font-awesome-icon(:icon="['fas', 'info-circle']")
@@ -46,9 +44,6 @@
 <script>
 export default {
   name: 'Footer',
-  props: [
-    'version',
-  ],
   methods: {
     shareText() {
       const title = document.title;
