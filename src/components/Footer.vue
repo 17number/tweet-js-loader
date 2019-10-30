@@ -2,17 +2,22 @@
   footer.footer
     .container
       .columns.is-mobile.is-multiline
-        .column.is-12-mobile.is-4-tablet
+        .column.is-12-mobile.is-3-tablet
           a(href="https://github.com/17number/tweet-js-loader" target="_blank" rel="noopener noreferrer")
             span.icon
               font-awesome-icon(:icon="['fab', 'github']")
             | Source code
-        .column.is-12-mobile.is-4-tablet
+        .column.is-12-mobile.is-3-tablet
           a(:href="`https://twitter.com/intent/tweet?text=${shareText()}`" target="_blank" rel="noopener noreferrer")
             span.icon
               font-awesome-icon(:icon="['fab', 'twitter']")
             | Share
-        .column.is-12-mobile.is-4-tablet
+        .column.is-12-mobile.is-3-tablet
+          span#copy.has-text-link(@click="copyToClipboard" data-tooltip="コピーしました" :class="tooltipClass")
+            span.icon
+              font-awesome-icon(:icon="['far', 'copy']")
+            | Copy
+        .column.is-12-mobile.is-3-tablet
           router-link(:to="`/privacy`")
             span.icon
               font-awesome-icon(:icon="['fas', 'info-circle']")
@@ -42,15 +47,32 @@
 </template>
 
 <script>
+import copy from 'copy-to-clipboard';
+
 export default {
   name: 'Footer',
+  data() {
+    return {
+      tooltipClass: '',
+    }
+  },
   methods: {
-    shareText() {
+    shareInfo() {
       const title = document.title;
       const url = location.href;
       const description = [].slice.call(document.head.children).find(t => t.tagName === 'META' && t.name === 'description').content;
-      return `${title}%0a${url}%0a${description}`;
-    }
+      return `${title}\n${url}\n${description}`;
+    },
+    shareText() {
+      return this.shareInfo().replace(/\n/g, '%0a');
+    },
+    copyToClipboard() {
+      copy(this.shareInfo());
+      this.tooltipClass = 'tooltip is-tooltip-active';
+      setTimeout(() => {
+        this.tooltipClass = '';
+      }, 2000);
+    },
   },
 };
 </script>
@@ -67,5 +89,9 @@ p.powered {
   span:nth-child(n+1) {
     margin: 0 5px;
   }
+}
+#copy:hover {
+  cursor: pointer;
+  color: #363636;
 }
 </style>
