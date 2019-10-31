@@ -11,10 +11,12 @@ export default new Router({
   routes: [
     {
       path: '/',
+      name: 'home',
       component: Home,
     },
     {
       path: '/privacy',
+      name: 'privacy',
       component: PrivacyPolicy,
     },
   ],

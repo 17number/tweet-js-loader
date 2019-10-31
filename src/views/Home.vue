@@ -24,6 +24,12 @@
               .icon.is-small.is-left
                 font-awesome-icon(:icon="['fas', 'filter']")
     Nav(:pages="pages" v-if="tweets.forRender.length > 0")
+    .columns.is-mobile.is-multiline.is-centered(v-if="tweets.forRender.length > 0")
+      .column.is-3-mobile.is-2-tablet.is-1-desktop
+        p.control.has-icons-left
+          input.input.is-small(type="number" v-model="pages.userInput" min="1" :max="pages.max" @input="changePage")
+          span.icon.is-left
+            font-awesome-icon(:icon="['far', 'arrow-alt-circle-right']" class="is-3")
     .container
       section.tweets.columns.is-mobile.is-multiline
         .column.is-12-mobile.is-6-tablet.is-4-widescreen.is-3-fullhd(v-for="(tweet, index) in tweets.forRender")
@@ -76,7 +82,9 @@ export default {
         next: 2,
         max: 1,
         per: 60,
+        userInput: '',
       },
+      changePageTimer: 0,
       keywords: "",
       filteringTimer: 0,
       selected: "1",
@@ -87,7 +95,11 @@ export default {
       this.fileContent = e;
       this.parseTweets();
       this.pages.max = Math.ceil(this.tweets.filtered.length / this.pages.per);
-      this.sliceTweets(this.pages.current);
+      if (this.pages.current > this.pages.max) {
+        this.$router.push({query: {page: this.pages.max}});
+      } else {
+        this.sliceTweets(this.pages.current);
+      }
     },
     async parseTweets() {
       this.tweets.all = JSON.parse(this.fileContent);
@@ -134,6 +146,27 @@ export default {
         this.pages.current = nextPage;
         this.pages.next = Math.min(nextPage + 1, this.pages.max);
       }
+      this.pages.userInput = this.pages.current;
+    },
+    changePage() {
+      if (this.changePageTimer !== 0) {
+        clearTimeout(this.changePageTimer);
+        this.changePageTimer = 0;
+      }
+      if (this.isValidPage()) {
+        this.changePageTimer = setTimeout(() => {
+          this.$router.push({query: {page: parseInt(this.pages.userInput)}});
+        }, 1000);
+      } else if (this.pages.userInput.trim() === '') {
+        this.changePageTimer = setTimeout(() => {
+          this.$router.push({query: {page: 1}});
+        }, 1000);
+      }
+    },
+    isValidPage() {
+      return parseInt(this.pages.userInput) > 0
+        && this.pages.userInput <= this.pages.max
+        && this.pages.userInput !== this.pages.current;
     },
     filtering() {
       if (this.filteringTimer !== 0) {
