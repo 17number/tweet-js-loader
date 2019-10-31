@@ -3,12 +3,17 @@ import router from './router'
 import App from './App.vue'
 
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faFileUpload, faFileDownload, faInfoCircle, faSearch, faFilter } from '@fortawesome/free-solid-svg-icons';
+import {
+  faFileUpload, faFileDownload, faInfoCircle, faSearch, faFilter, faHome
+} from '@fortawesome/free-solid-svg-icons';
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { faGithub, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
-library.add(faFileUpload, faFileDownload, faInfoCircle, faSearch, faFilter, faCopy, faGithub, faTwitter);
+library.add(
+  faFileUpload, faFileDownload, faInfoCircle, faSearch, faFilter, faHome,
+  faCopy, faGithub, faTwitter
+);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.config.productionTip = false;
 

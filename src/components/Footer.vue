@@ -2,27 +2,27 @@
   footer.footer
     .container
       .columns.is-mobile.is-multiline
-        .column.is-12-mobile.is-3-tablet
+        section.column.is-12-mobile.is-3-tablet
           a(href="https://github.com/17number/tweet-js-loader" target="_blank" rel="noopener noreferrer")
             span.icon
               font-awesome-icon(:icon="['fab', 'github']")
             | Source code
-        .column.is-12-mobile.is-3-tablet
+        section.column.is-12-mobile.is-3-tablet
           a(:href="`https://twitter.com/intent/tweet?text=${shareText()}`" target="_blank" rel="noopener noreferrer")
             span.icon
               font-awesome-icon(:icon="['fab', 'twitter']")
             | Share
-        .column.is-12-mobile.is-3-tablet
+        section.column.is-12-mobile.is-3-tablet
           span#copy.has-text-link(@click="copyToClipboard" data-tooltip="コピーしました" :class="tooltipClass")
             span.icon
               font-awesome-icon(:icon="['far', 'copy']")
             | Copy
-        .column.is-12-mobile.is-3-tablet
+        section.column.is-12-mobile.is-3-tablet
           router-link(:to="`/privacy`")
             span.icon
               font-awesome-icon(:icon="['fas', 'info-circle']")
             | Privacy Policy
-        .column.is-12-mobile.is-12
+        section.column.is-12-mobile.is-12
           p.powered
             span
               |Powered by

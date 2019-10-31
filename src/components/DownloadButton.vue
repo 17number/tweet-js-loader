@@ -1,5 +1,5 @@
 <template lang="pug">
-  .download-btn
+  section.download-btn
     .field.columns.is-centered
       a(:href="contentURL" download="tweets.csv" @click="generateCSV")
         .file.is-primary
@@ -48,6 +48,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .download-btn {
+  margin-top: 20px;
   margin-bottom: 20px;
 }
 </style>

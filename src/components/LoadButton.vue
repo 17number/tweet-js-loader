@@ -1,5 +1,5 @@
 <template lang="pug">
-  .load-btn
+  section.load-btn
     .field.columns.is-centered
       .file.is-info
         label.file-label

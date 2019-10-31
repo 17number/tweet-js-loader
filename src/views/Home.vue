@@ -1,9 +1,9 @@
 <template lang="pug">
   #home
-    Description
+    Description(v-if="tweets.all.length === 0")
     LoadButton(@file-select="recvFileContent" v-if="!fileContent")
     DownloadButton(:tweets="tweets.all" v-if="tweets.all.length > 0")
-    .filter-form.container(v-if="tweets.all.length > 0")
+    aside.filter-form.container(v-if="tweets.all.length > 0")
       .columns.is-mobile.is-multiline
         .column.is-12-mobile.is-8-tablet.is-offset-1-desktop.is-7-desktop.is-offset-2-widescreen.is-6-widescreen
           .field
@@ -25,7 +25,7 @@
                 font-awesome-icon(:icon="['fas', 'filter']")
     Nav(:pages="pages" v-if="tweets.forRender.length > 0")
     .container
-      .tweets.columns.is-mobile.is-multiline
+      section.tweets.columns.is-mobile.is-multiline
         .column.is-12-mobile.is-6-tablet.is-4-widescreen.is-3-fullhd(v-for="(tweet, index) in tweets.forRender")
           Tweet(:tweet="tweet")
     Nav(:pages="pages" v-if="tweets.forRender.length > 0")

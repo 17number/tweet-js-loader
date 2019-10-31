@@ -1,5 +1,5 @@
 <template lang="pug">
-  div.tweet(:data-tweet-id="tweet.id_str")
+  section.tweet(:data-tweet-id="tweet.id_str")
     blockquote.twitter-tweet
       p(lang="ja" dir="ltr")
       a(:href="'https://twitter.com/i/status/' + tweet.id_str")
@@ -12,7 +12,7 @@ export default {
     'tweet'
   ],
   updated() {
-    const tweetEle = document.querySelector(`div[data-tweet-id="${this.tweet.id_str}"`);
+    const tweetEle = document.querySelector(`section[data-tweet-id="${this.tweet.id_str}"`);
     if (tweetEle.getElementsByTagName("blockquote").length === 0) {
       tweetEle.insertAdjacentHTML(
         "afterBegin",

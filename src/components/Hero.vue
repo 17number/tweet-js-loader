@@ -1,5 +1,5 @@
 <template lang="pug">
-  .hero
+  section.hero
     router-link(:to="`/`")
       section.hero.is-primary.is-bold
         .hero-body
