@@ -188,7 +188,7 @@ export default {
       }, 1000);
     },
     updateBeforeFilter() {
-      document.querySelectorAll("twitter-widget").forEach(e => e.remove());
+      document.querySelectorAll("twitter-widget, section[data-tweet-id] blockquote.twitter-tweet.twitter-tweet-error").forEach(e => e.remove());
       this.removeTwitterWidgetScript();
     },
     updateAfterFilter() {
