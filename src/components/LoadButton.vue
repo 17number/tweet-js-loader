@@ -8,7 +8,7 @@
             span.file-icon
               font-awesome-icon(:icon="['fas', 'file-upload']")
             span.file-label
-              |tweet.js を読み込む
+              |tweet.js を読み込む / Load tweet.js
     .has-text-info.columns.is-centered {{ msg }}
     .has-text-danger.columns.is-centered {{ errorMsg }}
 </template>

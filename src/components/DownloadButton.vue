@@ -8,7 +8,7 @@
               span.file-icon
                 font-awesome-icon(:icon="['fas', 'file-download']")
               span.file-label
-                |tweets.csv を出力
+                |tweets.csv を出力 / export tweet.csv
 </template>
 
 <script>

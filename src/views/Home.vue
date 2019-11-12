@@ -8,7 +8,7 @@
         .column.is-12-mobile.is-8-tablet.is-offset-1-desktop.is-7-desktop.is-offset-2-widescreen.is-6-widescreen
           .field
             p.control.has-icons-left(:class="filteringTimer > 0 ? 'is-loading' : ''")
-              input.input(type="text" @input="filtering" v-model="keywords" placeholder="キーワードを入力")
+              input.input(type="text" @input="filtering" v-model="keywords" placeholder="キーワードを入力 / Input keywords")
               span.icon.is-small.is-left
                 font-awesome-icon(:icon="['fas', 'search']")
         .column.is-12-mobile.is-4-tablet
@@ -16,11 +16,11 @@
             .control.has-icons-left
               .select
                 select(v-model="selected" @change="sort")
-                  option(value="1") 日付が新しい順
-                  option(value="2") 日付が古い順
-                  option(value="3") いいね数が多い順
-                  option(value="4") RT数が多い順
-                  option(value="5") いいね数 + RT数 順
+                  option(value="1") 日付が新しい順 / Date DESC
+                  option(value="2") 日付が古い順 / Date ASC
+                  option(value="3") いいね数が多い順 / Like DESC
+                  option(value="4") RT数が多い順 / RT DESC
+                  option(value="5") いいね数 + RT数 順 / LIKE+RT DESC
               .icon.is-small.is-left
                 font-awesome-icon(:icon="['fas', 'filter']")
     Nav(:pages="pages" v-if="tweets.forRender.length > 0")
