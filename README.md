@@ -6,6 +6,10 @@
 
 ## Version History
 
+### 1.0.10
+
+- [他ツールの紹介リンク](https://r17n.page/2019/10/22/tweet-js-loader-introduction/#%E9%A1%9E%E4%BC%BC%E3%83%84%E3%83%BC%E3%83%AB)を追加
+
 ### 1.0.9
 
 - ページ指定機能

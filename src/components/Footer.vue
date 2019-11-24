@@ -2,22 +2,27 @@
   footer.footer
     .container
       .columns.is-mobile.is-multiline
-        section.column.is-12-mobile.is-3-tablet
-          a(href="https://github.com/17number/tweet-js-loader" target="_blank" rel="noopener noreferrer")
-            span.icon
-              font-awesome-icon(:icon="['fab', 'github']")
-            | Source code
-        section.column.is-12-mobile.is-3-tablet
-          a(:href="`https://twitter.com/intent/tweet?text=${shareText()}`" target="_blank" rel="noopener noreferrer")
+        section.column.is-12-mobile.is-4-tablet.is-2-desktop.is-offset-1-desktop
+          a(:href="`https://twitter.com/intent/tweet?text=${shareText()}`" target="_blank" rel="noopener noreferrer nofollow")
             span.icon
               font-awesome-icon(:icon="['fab', 'twitter']")
             | Share
-        section.column.is-12-mobile.is-3-tablet
+        section.column.is-12-mobile.is-4-tablet.is-2-desktop
           span#copy.has-text-link(@click="copyToClipboard" data-tooltip="コピーしました" :class="tooltipClass")
             span.icon
               font-awesome-icon(:icon="['far', 'copy']")
             | Copy
-        section.column.is-12-mobile.is-3-tablet
+        section.column.is-12-mobile.is-4-tablet.is-2-desktop
+          a(href="https://r17n.page/2019/10/22/tweet-js-loader-introduction/#%E9%A1%9E%E4%BC%BC%E3%83%84%E3%83%BC%E3%83%AB" target="_blank" rel="noopener noreferrer nofollow")
+            span.icon
+              font-awesome-icon(:icon="['fas', 'toolbox']")
+            | Other tools
+        section.column.is-12-mobile.is-4-tablet.is-2-desktop
+          a(href="https://github.com/17number/tweet-js-loader" target="_blank" rel="noopener noreferrer nofollow")
+            span.icon
+              font-awesome-icon(:icon="['fab', 'github']")
+            | Source code
+        section.column.is-12-mobile.is-4-tablet.is-2-desktop
           router-link(:to="`/privacy`")
             span.icon
               font-awesome-icon(:icon="['fas', 'info-circle']")
@@ -26,23 +31,23 @@
           p.powered
             span
               |Powered by
-            a(href="https://pages.github.com" target="_blank" rel="noopener noreferrer")
+            a(href="https://pages.github.com" target="_blank" rel="noopener noreferrer nofollow")
               |GitHub pages
             span
               | +
-            a(href="https://vuejs.org/index.html" target="_blank" rel="noopener noreferrer")
+            a(href="https://vuejs.org/index.html" target="_blank" rel="noopener noreferrer nofollow")
               |Vue.js
             span
               | +
-            a(href="https://router.vuejs.org" target="_blank" rel="noopener noreferrer")
+            a(href="https://router.vuejs.org" target="_blank" rel="noopener noreferrer nofollow")
               |Vue Router
             span
               | +
-            a(href="https://cli.vuejs.org" target="_blank" rel="noopener noreferrer")
+            a(href="https://cli.vuejs.org" target="_blank" rel="noopener noreferrer nofollow")
               |Vue CLI
             span
               | +
-            a(href="https://bulma.io" target="_blank" rel="noopener noreferrer")
+            a(href="https://bulma.io" target="_blank" rel="noopener noreferrer nofollow")
               |Bulma
 </template>
 
