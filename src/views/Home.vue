@@ -103,10 +103,14 @@ export default {
     },
     async parseTweets() {
       this.tweets.all = JSON.parse(this.fileContent);
-      this.tweets.all.forEach(tweet => {
-        tweet.favorite_count = Number(tweet.favorite_count);
-        tweet.retweet_count = Number(tweet.retweet_count);
+      this.tweets.all = this.tweets.all.map(tweet => {
+        if (tweet.tweet) {
+          tweet = tweet.tweet;
+        }
+        tweet.favorite_count = Number(tweet.favorite_count) || 0;
+        tweet.retweet_count = Number(tweet.retweet_count) || 0;
         tweet.fav_rt_count = tweet.favorite_count + tweet.retweet_count;
+        return tweet;
       });
       this.tweets.filtered = this.tweets.all;
     },
