@@ -107,15 +107,16 @@ export default {
       }
     },
     async parseTweets() {
-      this.tweets.all = JSON.parse(this.fileContent);
-      this.tweets.all = this.tweets.all.map(tweet => {
-        if (tweet.tweet) {
-          tweet = tweet.tweet;
-        }
-        tweet.favorite_count = Number(tweet.favorite_count) || 0;
-        tweet.retweet_count = Number(tweet.retweet_count) || 0;
-        tweet.fav_rt_count = tweet.favorite_count + tweet.retweet_count;
-        return tweet;
+      const tweets = JSON.parse(this.fileContent);
+      this.tweets.all = tweets.map(tweet => {
+        tweet = tweet.tweet ? tweet.tweet : tweet;
+        return {
+          id_str: tweet.id_str,
+          full_text: tweet.full_text,
+          created_at: tweet.created_at,
+          favorite_count: Number(tweet.favorite_count) || 0,
+          retweet_count: Number(tweet.retweet_count) || 0,
+        };
       });
       this.tweets.filtered = this.tweets.all;
     },
@@ -225,7 +226,7 @@ export default {
           break;
         case SortValues.LIKE_RT_DESC:
           this.tweets.filtered = this.tweets.filtered.sort((a, b) => {
-            return a.fav_rt_count < b.fav_rt_count ? 1 : -1;
+            return (a.favorite_count + a.retweet_count) < (b.favorite_count + b.retweet_count) ? 1 : -1;
           });
           break;
       }
