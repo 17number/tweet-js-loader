@@ -23,6 +23,21 @@
                   option(value="5") いいね数 + RT数 順 / LIKE+RT DESC
               .icon.is-small.is-left
                 font-awesome-icon(:icon="['fas', 'filter']")
+    //- フィルタ(写真/動画/リンク/ハッシュタグ)
+    .columns.is-mobile.is-multiline.is-centered(v-if="tweets.all.length > 0")
+      .column.is-2-mobile.is-1-tablet
+        .button.is-light.is-small.is-rounded(title="写真" :class="{'is-active is-primary': flags.photo}" @click="changeFlag('photo')")
+          font-awesome-icon(:icon="['far', 'image']" class="is-size-5")
+      .column.is-2-mobile.is-1-tablet
+        .button.is-light.is-small.is-rounded(title="動画" :class="{'is-active is-primary': flags.video}" @click="changeFlag('video')")
+          font-awesome-icon(:icon="['fas', 'video']" class="is-size-5")
+      .column.is-2-mobile.is-1-tablet
+        .button.is-light.is-small.is-rounded(title="リンク/URL" :class="{'is-active is-primary': flags.link}" @click="changeFlag('link')")
+          font-awesome-icon(:icon="['fas', 'link']" class="is-size-5")
+      .column.is-2-mobile.is-1-tablet
+        .button.is-light.is-small.is-rounded(title="ハッシュタグ" :class="{'is-active is-primary': flags.hashtag}" @click="changeFlag('hashtag')")
+          font-awesome-icon(:icon="['fas', 'hashtag']" class="is-size-5")
+    //- ナビゲーション
     Nav(:pages="pages" v-if="forRender.length > 0")
     .columns.is-mobile.is-multiline.is-centered(v-if="forRender.length > 0")
       .column.is-3-mobile.is-2-tablet
@@ -91,6 +106,12 @@ export default {
         per: 60,
         userInput: '',
       },
+      flags: {
+        photo: false,
+        video: false,
+        link: false,
+        hashtag: false,
+      },
       changePageTimer: 0,
       keywords: "",
       filteringTimer: 0,
@@ -117,9 +138,10 @@ export default {
         return {
           id_str: tweet.id_str,
           full_text: tweet.full_text,
-          created_at: tweet.created_at,
+          entities: tweet.entities || {},
           favorite_count: Number(tweet.favorite_count) || 0,
           retweet_count: Number(tweet.retweet_count) || 0,
+          created_at: tweet.created_at,
         };
       });
       this.tweets.filtered = this.tweets.all;
@@ -171,6 +193,10 @@ export default {
         }, 1000);
       }
     },
+    changeFlag(key) {
+      this.flags[key] = !this.flags[key];
+      this.filtering();
+    },
     isValidPage() {
       return parseInt(this.pages.userInput) > 0
         && this.pages.userInput <= this.pages.max
@@ -181,19 +207,59 @@ export default {
         clearTimeout(this.filteringTimer);
         this.filteringTimer = 0;
       }
-      if (this.keywords.trim() === "") {
-        this.tweets.filtered = this.tweets.all;
-        this.sort();
-        return;
-      }
+      let filtered = this.tweets.all;
+
+      // キーワードフィルタ
+      filtered = this.filteringByKeywords(filtered);
+
+      // 各種フラグによるフィルタ
+      filtered = this.filteringByMedias(filtered);
+
+      // 適用(delay 1000ms)
       this.filteringTimer = setTimeout(() => {
-        this.tweets.filtered = this.tweets.all.filter(tweet => {
+        this.tweets.filtered = filtered;
+        this.sort();
+      }, 1000);
+    },
+    filteringByKeywords(filtered) {
+      if (this.keywords.trim() !== "") {
+        filtered = filtered.filter(tweet => {
           return this.keywords.trim().split(/[\s\t]/).every(keyword => {
             return tweet.full_text.indexOf(keyword) >= 0;
           });
         });
-        this.sort();
-      }, 1000);
+      }
+      return filtered;
+    },
+    filteringByMedias(filtered) {
+      if (this.flags.photo || this.flags.video || this.flags.link || this.flags.hashtag) {
+        filtered = filtered.filter(tweet => {
+          let result = false;
+
+          // 写真
+          if (this.flags.photo && tweet.entities.media && tweet.entities.media.length > 0) {
+            result = result || tweet.entities.media[0].expanded_url.includes('/photo/');
+          }
+
+          // 動画
+          if (this.flags.video && tweet.entities.media && tweet.entities.media.length > 0) {
+            result = result || tweet.entities.media[0].expanded_url.includes('/video/');
+          }
+
+          // リンク
+          if (this.flags.link && tweet.entities.urls) {
+            result = result || tweet.entities.urls.length > 0;
+          }
+
+          // ハッシュタグ
+          if (this.flags.hashtag && tweet.entities.hashtags) {
+            result = result || tweet.entities.hashtags.length > 0;
+          }
+
+          return result;
+        });
+      }
+      return filtered;
     },
     updateBeforeFilter() {
       document
