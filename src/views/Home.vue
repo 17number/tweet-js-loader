@@ -1,5 +1,8 @@
 <template lang="pug">
   #home
+    div(style="margin-bottom: 5px;")
+      a.is-size-7(href="https://github.com/17number/tweet-js-loader#version-history" target="_blank" rel="noopener noreferrer nofollow")
+        |変更履歴 / Version history
     Description(v-if="tweets.all.length === 0")
     LoadButton(@file-select="recvFileContent" v-if="!fileContent")
     DownloadButton(:tweets="tweets.all" v-if="tweets.all.length > 0")
