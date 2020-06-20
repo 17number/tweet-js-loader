@@ -1,13 +1,13 @@
 <template lang="pug">
-  section.tweet(:data-tweet-id="tweet.id_str")
+  section.content.tweet(:data-tweet-id="tweet.id_str")
     blockquote.twitter-tweet
-      p(lang="ja" dir="ltr")
+      p(lang="ja" dir="ltr" class="is-size-7")
+      |{{ tweet.full_text || '' }}
       a(:href="'https://twitter.com/i/status/' + tweet.id_str")
 </template>
 
 <script>
 export default {
-  name: 'Tweet',
   props: [
     'tweet'
   ],
@@ -25,7 +25,9 @@ export default {
         "afterBegin",
         `
         <blockquote class="twitter-tweet">
-          <p lang="ja" dir="ltr"></p>
+          <p lang="ja" dir="ltr" class="is-size-7">
+            ${ this.tweet.full_text || '' }
+          </p>
           <a href="https://twitter.com/i/status/${this.tweet.id_str}"></a>
         </blockquote>
         `
