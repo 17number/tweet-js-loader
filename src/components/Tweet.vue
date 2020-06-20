@@ -2,8 +2,8 @@
   section.content.tweet(:data-tweet-id="tweet.id_str")
     blockquote.twitter-tweet
       p(lang="ja" dir="ltr" class="is-size-7")
-      |{{ tweet.full_text || '' }}
-      a(:href="'https://twitter.com/i/status/' + tweet.id_str")
+        a(:href="`https://twitter.com/i/status/${tweet.id_str}`" target="_blank" rel="noopener noreferrer nofollow")
+          |{{ tweet.full_text || '' }}
 </template>
 
 <script>
@@ -26,9 +26,10 @@ export default {
         `
         <blockquote class="twitter-tweet">
           <p lang="ja" dir="ltr" class="is-size-7">
-            ${ this.tweet.full_text || '' }
+            <a href="https://twitter.com/i/status/${this.tweet.id_str}" target="_blank" rel="noopener noreferrer nofollow">
+              ${ this.tweet.full_text || '' }
+            </a>
           </p>
-          <a href="https://twitter.com/i/status/${this.tweet.id_str}"></a>
         </blockquote>
         `
       );
