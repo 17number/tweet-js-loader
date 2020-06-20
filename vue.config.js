@@ -3,4 +3,7 @@ module.exports = {
   outputDir: 'docs',
   filenameHashing: false,
   productionSourceMap: false,
+  devServer: {
+    https: true,
+  },
 }
