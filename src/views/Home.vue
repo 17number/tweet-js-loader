@@ -225,7 +225,7 @@ export default {
       if (this.keywords.trim() !== "") {
         filtered = filtered.filter(tweet => {
           return this.keywords.trim().split(/[\s\t]/).every(keyword => {
-            return tweet.full_text.indexOf(keyword) >= 0;
+            return tweet.full_text.toLowerCase().indexOf(keyword.toLowerCase()) >= 0;
           });
         });
       }
