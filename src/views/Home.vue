@@ -166,7 +166,7 @@ export default {
     setPageNumber() {
       const currentPage = parseInt(this.$route.query.page || 1);
       this.pages.prev = Math.max(1, currentPage - 1);
-      this.pages.current = Math.min(1, currentPage);
+      this.pages.current = currentPage < 1 ? 1 : currentPage;
       this.pages.next = currentPage + 1;
     },
     updatePageNumber(nextPage) {
