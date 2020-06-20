@@ -265,9 +265,6 @@ export default {
       return filtered;
     },
     updateBeforeFilter() {
-      document
-        .querySelectorAll("twitter-widget, section[data-tweet-id] blockquote.twitter-tweet.twitter-tweet-error")
-        .forEach(e => e.remove());
       this.removeTwitterWidgetScript();
     },
     updateAfterFilter() {

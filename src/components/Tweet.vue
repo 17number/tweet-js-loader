@@ -11,6 +11,13 @@ export default {
   props: [
     'tweet'
   ],
+  beforeUpdate() {
+    const selector = `[data-tweet-id]:not([data-tweet-id="${this.tweet.id_str}"]), blockquote.twitter-tweet.twitter-tweet-error`;
+    const toRemove = this.$el.querySelector(selector);
+    if (toRemove) {
+      toRemove.remove();
+    }
+  },
   updated() {
     const tweetEle = document.querySelector(`section[data-tweet-id="${this.tweet.id_str}"`);
     if (tweetEle.getElementsByTagName("blockquote").length === 0) {
