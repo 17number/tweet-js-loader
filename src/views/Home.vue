@@ -23,8 +23,8 @@
                   option(value="5") いいね数 + RT数 順 / LIKE+RT DESC
               .icon.is-small.is-left
                 font-awesome-icon(:icon="['fas', 'filter']")
-    Nav(:pages="pages" v-if="tweets.forRender.length > 0")
-    .columns.is-mobile.is-multiline.is-centered(v-if="tweets.forRender.length > 0")
+    Nav(:pages="pages" v-if="forRender.length > 0")
+    .columns.is-mobile.is-multiline.is-centered(v-if="forRender.length > 0")
       .column.is-3-mobile.is-2-tablet.is-1-desktop
         p.control.has-icons-left
           input.input.is-small(type="number" v-model="pages.userInput" min="1" :max="pages.max" @input="changePage")
@@ -32,9 +32,9 @@
             font-awesome-icon(:icon="['far', 'arrow-alt-circle-right']" class="is-3")
     .container
       section.tweets.columns.is-mobile.is-multiline
-        .column.is-12-mobile.is-6-tablet.is-4-widescreen.is-3-fullhd(v-for="(tweet, index) in tweets.forRender")
+        .column.is-12-mobile.is-6-tablet.is-4-widescreen.is-3-fullhd(v-for="(tweet, index) in forRender")
           Tweet(:tweet="tweet")
-    Nav(:pages="pages" v-if="tweets.forRender.length > 0")
+    Nav(:pages="pages" v-if="forRender.length > 0")
 </template>
 
 <script>
@@ -68,13 +68,20 @@ export default {
     Description,
     Nav,
   },
+  computed: {
+    forRender() {
+      return this.tweets.filtered.slice(
+        (this.pages.current - 1) * this.pages.per,
+        this.pages.current * this.pages.per
+      );
+    },
+  },
   data() {
     return {
       fileContent: "",
       tweets: {
         all: [],
         filtered: [],
-        forRender: [],
       },
       pages: {
         prev: 1,
@@ -97,8 +104,6 @@ export default {
       this.pages.max = Math.ceil(this.tweets.filtered.length / this.pages.per);
       if (this.pages.current > this.pages.max) {
         this.$router.push({query: {page: this.pages.max}});
-      } else {
-        this.sliceTweets(this.pages.current);
       }
     },
     async parseTweets() {
@@ -127,12 +132,6 @@ export default {
       if(twitterWidgetScriptTag) {
         twitterWidgetScriptTag.remove();
       }
-    },
-    sliceTweets(page = 1) {
-      this.tweets.forRender = this.tweets.filtered.slice(
-        (page - 1) * this.pages.per,
-        page * this.pages.per
-      );
     },
     setPageNumber() {
       const currentPage = parseInt(this.$route.query.page || 1);
@@ -196,7 +195,6 @@ export default {
       this.removeTwitterWidgetScript();
     },
     updateAfterFilter() {
-      this.sliceTweets();
       this.pages.max = Math.ceil(this.tweets.filtered.length / this.pages.per);
       this.updatePageNumber();
       history.pushState(null, null, "/tweet-js-loader/");
@@ -242,9 +240,7 @@ export default {
   },
   beforeRouteUpdate(to, from, next) {
     this.updateBeforeFilter();
-    this.tweets.forRender = [];
     this.updatePageNumber(parseInt(to.query.page));
-    this.sliceTweets(to.query.page);
     next();
   },
 }
