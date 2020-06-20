@@ -3,7 +3,7 @@
     .field.columns.is-centered
       .file.is-info
         label.file-label
-          input.file-input(type="file" name="tweetjs" @change="onFileChange")
+          input.file-input(type="file" name="tweetjs" @change="onFileChange" accept=".js")
           span.file-cta
             span.file-icon
               font-awesome-icon(:icon="['fas', 'file-upload']")
