@@ -25,9 +25,9 @@
                 font-awesome-icon(:icon="['fas', 'filter']")
     Nav(:pages="pages" v-if="forRender.length > 0")
     .columns.is-mobile.is-multiline.is-centered(v-if="forRender.length > 0")
-      .column.is-3-mobile.is-2-tablet.is-1-desktop
+      .column.is-3-mobile.is-2-tablet
         p.control.has-icons-left
-          input.input.is-small(type="number" v-model="pages.userInput" min="1" :max="pages.max" @input="changePage")
+          input.input.is-small(type="number" v-model="pages.userInput" min="1" :max="pages.max" @input="changePage" placeholder="ページ番号を入力 / Input page no")
           span.icon.is-left
             font-awesome-icon(:icon="['far', 'arrow-alt-circle-right']" class="is-3")
     .container
@@ -103,7 +103,11 @@ export default {
       this.parseTweets();
       this.pages.max = Math.ceil(this.tweets.filtered.length / this.pages.per);
       if (this.pages.current > this.pages.max) {
-        this.$router.push({query: {page: this.pages.max}});
+        this.pages.current = this.pages.max;
+        this.$router.push({ query: { page: this.pages.max } });
+      } else if (this.pages.current < 1) {
+        this.pages.current = 1;
+        this.$router.push({ query: { page: 1 } });
       }
     },
     async parseTweets() {
@@ -130,14 +134,14 @@ export default {
     },
     removeTwitterWidgetScript() {
       const twitterWidgetScriptTag = document.getElementById("twitter-widget-script");
-      if(twitterWidgetScriptTag) {
+      if (twitterWidgetScriptTag) {
         twitterWidgetScriptTag.remove();
       }
     },
     setPageNumber() {
       const currentPage = parseInt(this.$route.query.page || 1);
       this.pages.prev = Math.max(1, currentPage - 1);
-      this.pages.current = currentPage;
+      this.pages.current = Math.min(1, currentPage);
       this.pages.next = currentPage + 1;
     },
     updatePageNumber(nextPage) {
@@ -159,11 +163,11 @@ export default {
       }
       if (this.isValidPage()) {
         this.changePageTimer = setTimeout(() => {
-          this.$router.push({query: {page: parseInt(this.pages.userInput)}});
+          this.$router.push({ query: { page: parseInt(this.pages.userInput) } });
         }, 1000);
       } else if (this.pages.userInput.trim() === '') {
         this.changePageTimer = setTimeout(() => {
-          this.$router.push({query: {page: 1}});
+          this.$router.push({ query: { page: 1 } });
         }, 1000);
       }
     },
@@ -186,13 +190,15 @@ export default {
         this.tweets.filtered = this.tweets.all.filter(tweet => {
           return this.keywords.trim().split(/[\s\t]/).every(keyword => {
             return tweet.full_text.indexOf(keyword) >= 0;
-          })
+          });
         });
         this.sort();
       }, 1000);
     },
     updateBeforeFilter() {
-      document.querySelectorAll("twitter-widget, section[data-tweet-id] blockquote.twitter-tweet.twitter-tweet-error").forEach(e => e.remove());
+      document
+        .querySelectorAll("twitter-widget, section[data-tweet-id] blockquote.twitter-tweet.twitter-tweet-error")
+        .forEach(e => e.remove());
       this.removeTwitterWidgetScript();
     },
     updateAfterFilter() {
