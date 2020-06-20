@@ -2,7 +2,7 @@
   footer.footer
     .container
       .columns.is-mobile.is-multiline
-        section.column.is-12-mobile.is-4-tablet.is-2-desktop.is-offset-1-desktop
+        section.column.is-12-mobile.is-4-tablet.is-2-desktop
           a(:href="`https://twitter.com/intent/tweet?text=${shareText()}`" target="_blank" rel="noopener noreferrer nofollow")
             span.icon
               font-awesome-icon(:icon="['fab', 'twitter']")
@@ -13,15 +13,20 @@
               font-awesome-icon(:icon="['far', 'copy']")
             | Copy
         section.column.is-12-mobile.is-4-tablet.is-2-desktop
-          a(href="https://r17n.page/2019/10/22/tweet-js-loader-introduction/#%E9%A1%9E%E4%BC%BC%E3%83%84%E3%83%BC%E3%83%AB" target="_blank" rel="noopener noreferrer nofollow")
-            span.icon
-              font-awesome-icon(:icon="['fas', 'toolbox']")
-            | Other tools
-        section.column.is-12-mobile.is-4-tablet.is-2-desktop
           a(href="https://github.com/17number/tweet-js-loader" target="_blank" rel="noopener noreferrer nofollow")
             span.icon
               font-awesome-icon(:icon="['fab', 'github']")
             | Source code
+        section.column.is-12-mobile.is-4-tablet.is-2-desktop
+          a(href="https://r17n.page/2019/10/22/tweet-js-loader-introduction/" target="_blank" rel="noopener noreferrer nofollow")
+            span.icon
+              font-awesome-icon(:icon="['fas', 'blog']")
+            | Blog
+        section.column.is-12-mobile.is-4-tablet.is-2-desktop
+          a(href="https://r17n.page/2019/10/22/tweet-js-loader-introduction/#%E9%A1%9E%E4%BC%BC%E3%83%84%E3%83%BC%E3%83%AB" target="_blank" rel="noopener noreferrer nofollow")
+            span.icon
+              font-awesome-icon(:icon="['fas', 'toolbox']")
+            | Other tools
         section.column.is-12-mobile.is-4-tablet.is-2-desktop
           router-link(:to="`/privacy`")
             span.icon

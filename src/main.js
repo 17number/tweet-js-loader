@@ -14,6 +14,7 @@ import {
   faVideo,
   faLink,
   faHashtag,
+  faBlog,
 } from '@fortawesome/free-solid-svg-icons';
 import {
   faCopy,
@@ -35,6 +36,7 @@ library.add(
   faVideo,
   faLink,
   faHashtag,
+  faBlog,
   faCopy,
   faArrowAltCircleRight,
   faGithub,
