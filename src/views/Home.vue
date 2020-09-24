@@ -5,7 +5,7 @@
         |変更履歴 / Version history
     Description(v-if="tweets.all.length === 0")
     LoadButton(@file-select="recvFileContent" v-if="!fileContent")
-    DownloadButton(:tweets="tweets.all" v-if="tweets.all.length > 0")
+    DownloadButton(:tweets="tweets.filtered" v-if="tweets.filtered.length > 0")
     aside.filter-form.container(v-if="tweets.all.length > 0")
       .columns.is-mobile.is-multiline
         .column.is-12-mobile.is-8-tablet.is-offset-1-desktop.is-7-desktop.is-offset-2-widescreen.is-6-widescreen
@@ -144,10 +144,11 @@ export default {
           entities: tweet.entities || {},
           favorite_count: Number(tweet.favorite_count) || 0,
           retweet_count: Number(tweet.retweet_count) || 0,
-          created_at: tweet.created_at,
+          created_at: moment(tweet.created_at).tz('Asia/Tokyo'),
         };
       });
       this.tweets.filtered = this.tweets.all;
+      this.sort();
     },
     loadTwitterWidgetScript() {
       let twitterWidgetScript = document.createElement("script");
@@ -278,12 +279,12 @@ export default {
       switch(this.selected) {
         case SortValues.DATE_DESC:
           this.tweets.filtered = this.tweets.filtered.sort((a, b) => {
-            return moment(a.created_at).tz("Asia/Tokyo").unix() < moment(b.created_at).tz("Asia/Tokyo").unix() ? 1 : -1;
+            return a.created_at.unix() < b.created_at.unix() ? 1 : -1;
           });
           break;
         case SortValues.DATE_ASC:
           this.tweets.filtered = this.tweets.filtered.sort((a, b) => {
-            return moment(a.created_at).tz("Asia/Tokyo").unix() > moment(b.created_at).tz("Asia/Tokyo").unix() ? 1 : -1;
+            return a.created_at.unix() > b.created_at.unix() ? 1 : -1;
           });
           break;
         case SortValues.LIKE_DESC:

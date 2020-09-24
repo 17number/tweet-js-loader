@@ -13,7 +13,6 @@
 
 <script>
 import * as CSV from 'csv-string';
-import * as moment from 'moment-timezone';
 
 export default {
   name: 'DownloadButton',
@@ -28,17 +27,17 @@ export default {
   methods: {
     generateCSV() {
       const bom = new Uint8Array([0xEF, 0xBB, 0xBF]);
-      let contents = this.tweets.map(tweet => {
-        return CSV.stringify([
-          tweet.id_str,
-          moment(tweet.created_at).tz("Asia/Tokyo").format("Y/MM/DD HH:mm:ss"),
-          tweet.full_text,
-          tweet.favorite_count,
-          tweet.retweet_count,
-        ]);
-      });
-      contents = [["tweet_id", "timestamp", "text", "likes", "retweets"]].concat(contents);
-      const blob = new Blob([bom, contents.join("\n")], {type: "text/csv"});
+      const header = ["tweet_id", "timestamp", "text", "likes", "retweets"];
+      const data = this.tweets.map(tweet => [
+        tweet.id_str,
+        tweet.created_at.format("Y/MM/DD HH:mm:ss"),
+        tweet.full_text,
+        tweet.favorite_count,
+        tweet.retweet_count,
+      ]);
+      data.unshift(header);
+      const contents = CSV.stringify(data);
+      const blob = new Blob([bom, contents], {type: "text/csv"});
       this.contentURL = window.URL.createObjectURL(blob);
     }
   }
