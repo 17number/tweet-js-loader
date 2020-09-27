@@ -8,6 +8,8 @@
               |tweet.js loader
             h2.subtitle.is-size-5
               |{{ version }}
+            span.is-size-7.has-text-weight-medium
+              |{{ ` (Updated at ${lastUpdatedAt})` }}
 </template>
 
 <script>
@@ -15,6 +17,7 @@ export default {
   name: 'Hero',
   props: [
     'version',
+    'lastUpdatedAt',
   ],
 }
 </script>
@@ -23,5 +26,8 @@ export default {
 <style scoped lang="scss">
 .hero {
   margin-bottom: 10px;
+}
+h2.subtitle {
+  margin-bottom: 0;
 }
 </style>

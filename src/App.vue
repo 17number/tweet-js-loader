@@ -1,6 +1,6 @@
 <template lang="pug">
   #app
-    Hero(:version="version")
+    Hero(:version="version" :lastUpdatedAt="lastUpdatedAt")
     router-view
     Footer
 </template>
@@ -17,7 +17,8 @@ export default {
   },
   data() {
     return {
-      version: "v1.0.13"
+      version: "v1.0.13",
+      lastUpdatedAt: "2020/09/24",
     };
   },
 }
