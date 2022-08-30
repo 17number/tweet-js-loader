@@ -16,7 +16,7 @@
     "copy-to-clipboard": "^3.2.0",
     "core-js": "^3.1.2",
     "csv-string": "^3.1.6",
-    "moment-timezone": "^0.5.27",
+    "moment-timezone": "^0.5.35",
     "vue": "^2.6.10",
     "vue-router": "^3.1.3"
   },
